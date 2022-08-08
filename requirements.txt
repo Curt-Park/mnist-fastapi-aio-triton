@@ -1,0 +1,6 @@
+fastapi         == 0.79.0
+uvicorn         == 0.18.2
+pytorch         == 1.12.1
+torchvision     == 0.13.1
+cudatoolkit	== 11.6
+tqdm            == 4.63.0
