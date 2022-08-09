@@ -20,6 +20,9 @@ triton:
 api:
 	PYTHONPATH=src uvicorn api.main:app --reload --host 0.0.0.0 --port 8888
 
+locust:
+	locust -f locustfile.py APIUser
+
 # model
 train:
 	echo "Training starts"
