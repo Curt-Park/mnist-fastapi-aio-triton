@@ -126,7 +126,7 @@ def test(
 
     print(
         f"Test set: Average loss: {test_loss:.4f}\t"
-        f"Accuracy: {correct}/{len(test_loader.dataset)} ({test_acc:.2f}%%)",
+        f"Accuracy: {correct}/{len(test_loader.dataset)} ({test_acc:.2f}%)",
     )
 
     return test_acc

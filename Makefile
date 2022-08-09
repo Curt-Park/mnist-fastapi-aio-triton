@@ -14,8 +14,17 @@ setup:
 # services
 triton:
 	docker run --gpus 1 --ipc host --rm -p 8000:8000 -p 8001:8001 -p 8002:8002 \
-		-v $(PWD)/model_repository:/models nvcr.io/nvidia/tritonserver:22.02-py3 \
+		-v $(PWD)/model_repository:/models nvcr.io/nvidia/tritonserver:22.04-py3 \
 		tritonserver --model-repository=/models
 
 api:
 	PYTHONPATH=src uvicorn api.main:app --reload --host 0.0.0.0 --port 8888
+
+# model
+train:
+	echo "Training starts"
+	PYTHONPATH=src/ml python src/ml/train.py
+	echo "The trained model is save as model.pt"
+	mkdir -p model_repository/mnist_cnn/1
+	cp model.pt model_repository/mnist_cnn/1
+	echo "model.pt is copied to model_repository/mnist_cnn/1"
