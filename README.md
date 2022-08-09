@@ -1,3 +1,4 @@
+# NOT COMPLETLY DONE
 You can see the previous works from:
 
 1. https://github.com/Curt-Park/triton-inference-server-practice (00-quick-start)
