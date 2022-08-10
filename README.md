@@ -53,4 +53,9 @@ export TRITON_SERVER_URL=ip-address:8001
 $ make locust
 ```
 
-Open http://0.0.0.0:8089
+Open http://0.0.0.0:8089 and type the api address in `Host`.
+<img width="1275" alt="" src="https://user-images.githubusercontent.com/14961526/184040578-26b07242-c665-448e-9f5c-82988ffcc44b.png">
+
+## Further Steps for k8s
+- Triton + K8s: https://github.com/triton-inference-server/server/tree/main/deploy/k8s-onprem
+- Locust + K8s: https://github.com/Curt-Park/locust-k8s
