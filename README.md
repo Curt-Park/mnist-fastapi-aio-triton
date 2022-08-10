@@ -42,6 +42,11 @@ $ make triton     # run triton server
 $ make api        # run fastapi server
 ```
 
+- NOTE: If you want to run triton server and fastapi server on different devices, just set `TRITON_SERVER_URL` before running fastapi.
+```bash
+export TRITON_SERVER_URL=ip-address:8001
+```
+
 #### Execute Locust
 
 ```bash

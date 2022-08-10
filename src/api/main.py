@@ -18,15 +18,9 @@ digit_predictor = DigitPredictor()
 
 
 @app.get("/")
-def root() -> str:
-    """Show the proper usage."""
-    return "Try api-address:api-port/predict/image_name"
-
-
-@app.get("/predict")
-def predict_without_image() -> str:
-    """Show the proper usage."""
-    return "Try api-address:api-port/predict/image_name"
+def healthcheck() -> bool:
+    """Check the server's status."""
+    return True
 
 
 @app.get("/predict/mnist")
