@@ -1,10 +1,8 @@
 """Async Triton predictor."""
+import os
 import tritonclient.grpc.aio as grpcclient
 
 from .utils import decode_img
-
-
-digit_predictor = DigitPredictor()
 
 
 class DigitPredictor:
@@ -17,7 +15,7 @@ class DigitPredictor:
         self.outputs = [grpcclient.InferRequestedOutput("OUTPUT")]
         self.model_name = "mnist_cnn"
 
-    async def predict(self, img: str) -> int
+    async def predict(self, img: str) -> int:
         """Predict the digit from the image encoded w/ base64."""
         img = decode_img(img)
 

@@ -5,14 +5,16 @@ import os
 
 from fastapi import FastAPI
 
-from predictor import digit_predictor
+from .predictor import DigitPredictor
 
 if not os.path.exists("logs"):
     os.mkdir("logs")
 
 logging.config.fileConfig("logging.conf")
 logger = logging.getLogger()
+
 app = FastAPI()
+digit_predictor = DigitPredictor()
 
 
 @app.get("/")

@@ -1,2 +1,2 @@
-tritonclient 	== 2.24.0
-opencv-python	== 4.6.0.66
+tritonclient[all] 	== 2.24.0
+opencv-python	    == 4.6.0.66
