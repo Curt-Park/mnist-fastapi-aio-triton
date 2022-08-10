@@ -6,7 +6,7 @@ import os
 from fastapi import FastAPI
 
 from .predictor import DigitPredictor
-from .model import ImageReq
+from .model import ImageReq, PredictionRes
 
 if not os.path.exists("logs"):
     os.mkdir("logs")
@@ -24,8 +24,10 @@ def healthcheck() -> bool:
     return True
 
 
-@app.get("/predict-mnist")
-async def predict_digit(data: ImageReq) -> int:
+@app.get("/predict-mnist", response_model=PredictionRes)
+async def predict_digit(data: ImageReq) -> PredictionRes:
     """Predict the digit from the input image."""
     logger.info("Received an image")
-    return await digit_predictor.predict(data.image, data.height, data.width)
+    prediction = await digit_predictor.predict(data.image, data.height, data.width)
+    logger.info("Predicted %d", prediction)
+    return PredictionRes(prediction=prediction)

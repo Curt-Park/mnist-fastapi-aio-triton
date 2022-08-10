@@ -10,3 +10,9 @@ class ImageReq(BaseModel):
     )
     height: int = Field(..., title="Image's height", example=1)
     width: int = Field(..., title="Image's width", example=2)
+
+
+class PredictionRes(BaseModel):
+    """Prediction Response model."""
+
+    prediction: int = Field(..., title="Prediction result", example=1)
