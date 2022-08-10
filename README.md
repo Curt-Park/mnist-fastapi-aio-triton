@@ -56,6 +56,18 @@ $ make locust
 Open http://0.0.0.0:8089 and type the api address in `Host`.
 <img width="1275" alt="" src="https://user-images.githubusercontent.com/14961526/184040578-26b07242-c665-448e-9f5c-82988ffcc44b.png">
 
+## Experimental Result
+- CPU: AMD Ryzen Threadripper PRO 3995WX 64-Cores
+- GPU: NVIDIA GeForce RTX 3090
+- FastAPI, Triton, Locust are executed on the same device
+- a single v-user sends a request once a second
+
+<img width="1270" alt="" src="https://user-images.githubusercontent.com/14961526/184042449-109c5bf3-fe58-4cfc-ba45-923b90a79d1f.png">
+<img width="1256" alt="" src="https://user-images.githubusercontent.com/14961526/184042458-37893515-c9c0-4177-8f94-d4fecf18f4c3.png">
+
+From 1,000 v-user, the latency increases.
+
+
 ## Further Steps for k8s
 - Triton + K8s: https://github.com/triton-inference-server/server/tree/main/deploy/k8s-onprem
 - Locust + K8s: https://github.com/Curt-Park/locust-k8s
