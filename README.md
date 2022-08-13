@@ -61,11 +61,57 @@ Open http://0.0.0.0:8089 and type the api address in `Host`.
 - FastAPI, Triton, Locust are executed on the same device
 - a single v-user sends a request once a second
 
-<img width="1270" alt="" src="https://user-images.githubusercontent.com/14961526/184042449-109c5bf3-fe58-4cfc-ba45-923b90a79d1f.png">
-<img width="1256" alt="" src="https://user-images.githubusercontent.com/14961526/184042458-37893515-c9c0-4177-8f94-d4fecf18f4c3.png">
+<img width="1272" alt="" src="https://user-images.githubusercontent.com/14961526/184470769-cddcce5d-a394-45de-b94d-d92326eebae1.png">
+<img width="1255" alt="" src="https://user-images.githubusercontent.com/14961526/184470771-17d4db16-f5c5-4cad-982f-854f385616c9.png">
 
-From 1,000 v-user, the latency increases.
+From 1,400 v-user, the response latency increases.
 
+The following is the triton metrics.
+The difference of `nv_inference_count` and `nv_inference_exec_count` shows the dynamic batching works.
+(Details about [Triton Metrics](https://github.com/triton-inference-server/server/blob/main/docs/metrics.md))
+
+```bash
+# Triton Metrics
+$ curl localhost:8002/metrics
+
+# HELP nv_inference_request_success Number of successful inference requests, all batch sizes
+# TYPE nv_inference_request_success counter
+nv_inference_request_success{model="mnist_cnn",version="1"} 395927.000000
+# HELP nv_inference_request_failure Number of failed inference requests, all batch sizes
+# TYPE nv_inference_request_failure counter
+nv_inference_request_failure{model="mnist_cnn",version="1"} 0.000000
+# HELP nv_inference_count Number of inferences performed (does not include cached requests)
+# TYPE nv_inference_count counter
+nv_inference_count{model="mnist_cnn",version="1"} 395927.000000
+# HELP nv_inference_exec_count Number of model executions performed (does not include cached requests)
+# TYPE nv_inference_exec_count counter
+nv_inference_exec_count{model="mnist_cnn",version="1"} 193751.000000
+...
+```
+
+* NOTE: The connection number is limited to `open files` (check this with `ulimit -a` command).
+In order to change the upper bound, you should set the maximum number of `open files` by `ulimit -Sn 65535`.
+
+```bash
+$ ulimit -a
+
+core file size          (blocks, -c) 0
+data seg size           (kbytes, -d) unlimited
+scheduling priority             (-e) 0
+file size               (blocks, -f) unlimited
+pending signals                 (-i) 513958
+max locked memory       (kbytes, -l) unlimited
+max memory size         (kbytes, -m) unlimited
+open files                      (-n) 65535    # <- This line!
+pipe size            (512 bytes, -p) 8
+POSIX message queues     (bytes, -q) 819200
+real-time priority              (-r) 0
+stack size              (kbytes, -s) 8192
+cpu time               (seconds, -t) unlimited
+max user processes              (-u) 513958
+virtual memory          (kbytes, -v) unlimited
+file locks                      (-x) unlimited
+```
 
 ## Further Steps for k8s
 - Triton + K8s: https://github.com/triton-inference-server/server/tree/main/deploy/k8s-onprem
