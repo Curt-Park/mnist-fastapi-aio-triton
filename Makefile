@@ -21,7 +21,7 @@ api:
 	PYTHONPATH=src uvicorn api.main:app --reload --host 0.0.0.0 --port 8888
 
 locust:
-	locust -f locustfile.py APIUser
+	locust -f src/locust/locustfile.py APIUser
 
 # model
 train:
