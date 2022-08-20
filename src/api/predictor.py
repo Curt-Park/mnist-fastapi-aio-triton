@@ -16,11 +16,21 @@ class ImageClassifier:
         self.outputs = [grpcclient.InferRequestedOutput("OUTPUT__0")]
 
     async def predict(
-        self, img: str, height: int, width: int, model_name: str = "mnist_cnn"
+        self,
+        img: str,
+        height: int,
+        width: int,
+        model_name: str = "mnist_cnn",
+        mean: float = 0.1307,
+        std: float = 0.3081,
     ) -> int:
         """Predict the digit from the image encoded w/ base64."""
         img = decode_img(img)
         img = img.reshape(1, 1, height, width)
+
+        # normalize
+        img = img / img.max()
+        img = (img - mean) / std
 
         # predict w/ triton
         inputs = [grpcclient.InferInput("INPUT__0", img.shape, "FP32")]
