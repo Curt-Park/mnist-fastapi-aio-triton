@@ -5,8 +5,8 @@ import os
 
 from fastapi import FastAPI
 
-from .predictor import DigitPredictor
-from .model import ImageReq, PredictionRes
+from .predictor import ImageClassifier
+from .model import ImageClassficationRequest, PredictionResponse
 
 if not os.path.exists("logs"):
     os.mkdir("logs")
@@ -15,7 +15,7 @@ logging.config.fileConfig("logging.conf")
 logger = logging.getLogger()
 
 app = FastAPI()
-digit_predictor = DigitPredictor()
+classifier = ImageClassifier()
 
 
 @app.get("/")
@@ -24,10 +24,10 @@ def healthcheck() -> bool:
     return True
 
 
-@app.get("/predict-mnist", response_model=PredictionRes)
-async def predict_digit(data: ImageReq) -> PredictionRes:
+@app.get("/predict-mnist", response_model=PredictionResponse)
+async def predict_digit(data: ImageClassficationRequest) -> PredictionResponse:
     """Predict the digit from the input image."""
     logger.info("Received an image")
-    prediction = await digit_predictor.predict(data.image, data.height, data.width)
+    prediction = await classifier.predict(data.image, data.height, data.width)
     logger.info("Predicted %d", prediction)
-    return PredictionRes(prediction=prediction)
+    return PredictionResponse(prediction=prediction)
