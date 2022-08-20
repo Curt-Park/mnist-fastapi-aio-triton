@@ -24,6 +24,8 @@ locust:
 	locust -f src/locust/locustfile.py APIUser
 
 # model
+# you can use tensorrt for more optimized performance
+# https://github.com/NVIDIA/TensorRT/blob/main/quickstart/IntroNotebooks/4.%20Using%20PyTorch%20through%20ONNX.ipynb
 train:
 	echo "Training starts"
 	PYTHONPATH=src/ml python src/ml/train.py

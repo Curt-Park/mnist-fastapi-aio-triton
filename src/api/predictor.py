@@ -3,7 +3,7 @@ import os
 import tritonclient.grpc.aio as grpcclient
 import numpy as np
 
-from .utils import decode_img
+from .utils import decode_img, normalize_img
 
 
 class ImageClassifier:
@@ -25,12 +25,12 @@ class ImageClassifier:
         std: float = 0.3081,
     ) -> int:
         """Predict the digit from the image encoded w/ base64."""
+        # preprocess
+        # Dali can be used for faster preprocessing
+        # https://github.com/triton-inference-server/dali_backend
         img = decode_img(img)
+        img = normalize_img(img, mean, std)
         img = img.reshape(1, 1, height, width)
-
-        # normalize
-        img = img / img.max()
-        img = (img - mean) / std
 
         # predict w/ triton
         inputs = [grpcclient.InferInput("INPUT__0", img.shape, "FP32")]
